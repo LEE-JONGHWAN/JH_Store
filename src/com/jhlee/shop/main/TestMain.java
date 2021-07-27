@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class TestMain {
 
 	public static void main(String[] args) {
+		var testMain = new TestMain(); 
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("=".repeat(40));
