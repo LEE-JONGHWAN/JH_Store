@@ -52,9 +52,12 @@ DROP TABLE IF EXISTS `구매내역`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `구매내역` (
-  `구매내역ID` int(11) DEFAULT NULL,
+  `구매내역ID` int(11) NOT NULL AUTO_INCREMENT,
   `회원ID` int(11) DEFAULT NULL,
-  `주소ID` int(11) DEFAULT NULL
+  `주소ID` int(11) DEFAULT NULL,
+  `구매자이름` varchar(40) DEFAULT NULL,
+  `구매일자` datetime DEFAULT NULL,
+  PRIMARY KEY (`구매내역ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -127,9 +130,10 @@ DROP TABLE IF EXISTS `회원명의`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `회원명의` (
-  `회원ID` int(11) DEFAULT NULL,
+  `회원ID` int(11) NOT NULL AUTO_INCREMENT,
   `회원이름` varchar(50) DEFAULT NULL,
-  `회원핸드폰번호` varchar(40) DEFAULT NULL
+  `회원핸드폰번호` varchar(40) DEFAULT NULL COMMENT '010-0000-0000 으로 입력',
+  PRIMARY KEY (`회원ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -150,10 +154,13 @@ DROP TABLE IF EXISTS `회원주소`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `회원주소` (
-  `주소ID` int(11) DEFAULT NULL,
+  `주소ID` int(11) NOT NULL AUTO_INCREMENT,
   `회원ID` int(11) DEFAULT NULL,
-  `기본주소` varchar(100) DEFAULT NULL,
-  `상세주소` varchar(100) DEFAULT NULL
+  `기본주소` varchar(100) DEFAULT NULL COMMENT '주소를 가져오는 곳에서 주소를 가져온다.',
+  `상세주소` varchar(100) DEFAULT NULL COMMENT '아파트 이름과 동/호수를 입력',
+  PRIMARY KEY (`주소ID`),
+  KEY `회원주소_FK` (`회원ID`),
+  CONSTRAINT `회원주소_FK` FOREIGN KEY (`회원ID`) REFERENCES `회원명의` (`회원ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -179,4 +186,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-28 15:19:48
+-- Dump completed on 2021-07-29 18:07:15

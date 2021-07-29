@@ -1,38 +1,19 @@
 package com.jhlee.shop.main;
 
 
+import java.io.IOException;
+import java.nio.file.NoSuchFileException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Scanner;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
-import com.jbpark.dabang.module.AddressMan;
-import com.jbpark.utility.JLogger;
 
 
-class DBLogin {
-	private static Logger logger = null; 
-	
-	private static Connection conn = getConnection();
-	
-	public static Connection getConnection() {
-		Connection conn = null;
-		String userName = "myself";
-		String password = "1234";
-		String url = "jdbc:mariadb://localhost:3306/jb_dabang";
-		String driver = "org.mariadb.jdbc.Driver";
 
-		try {
-			Class.forName(driver);
-			conn = DriverManager.getConnection(url, userName, password);
-			return conn;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-}
 public class JHShop {
 	private static Logger logger = JLogger.getLogger();
 	
@@ -220,3 +201,78 @@ public class JHShop {
 	}
 }
 
+
+/**
+ * J(Jonghwan Lee) Global Logger log file location
+ * Directory: user/home/G_LOG
+ * FIle name: java(n).log.(i) where n: 0-99.
+ * See properties in JDK/logging.properties.
+ * 
+ * @author Lee, Jonghwan
+ *
+ */
+class JLogger {
+	private static Logger logger = Logger.getGlobal();
+	
+	public static String getFilePath() {
+		return "로그파일: " + logFile;
+	}
+	private static String logFile = "D:/LOG/global.%g.log";
+	public static Logger getLogger() {
+		logger.setLevel(Level.CONFIG);
+		logger.setUseParentHandlers(false);
+		int LOG_ROTATION_COUNT = 30;
+		JH_FileHandler handler;
+		try {
+			handler = new JH_FileHandler(logFile, 0, LOG_ROTATION_COUNT);
+			handler.setLevel(Level.CONFIG);
+			logger.addHandler(handler);
+		} catch (NoSuchFileException e) {
+			System.out.println("파일부재 오류: " + e.getFile());
+			System.out.println("프로그램 종료!");
+			System.exit(-1);
+		} catch (SecurityException | IOException e) {
+			e.printStackTrace();
+		}		
+		
+		System.out.println(JLogger.getFilePath());
+		return logger;
+	}	
+}
+
+class DBLogin {
+	
+	public static Connection getConnection() {
+		Connection conn = null;
+		String userName = "myself";
+		String password = "1234";
+		String url = "jdbc:mariadb://localhost:3306/jh_store";
+		String driver = "org.mariadb.jdbc.Driver";
+
+		try {
+			Class.forName(driver);
+			conn = DriverManager.getConnection(url, userName, password);
+			return conn;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+}
+
+class JH_FileHandler extends FileHandler {
+	public JH_FileHandler(String pattern, int limit, int count) 
+			throws IOException, SecurityException {
+		super(pattern, limit, count);
+	}
+	
+	/** Write each log line(=record) on to disk right away.
+	 * @author Lee, Jonghwan
+	 */
+	@Override
+	public synchronized void publish(LogRecord record) {
+		super.publish(record);
+		flush();
+	}
+}

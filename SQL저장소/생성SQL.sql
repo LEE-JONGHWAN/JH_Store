@@ -2,6 +2,24 @@
 -- 데이터베이스 생성
 CREATE DATABASE `jh_store` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
+-- 데이터베이스 권한 추가
+
+GRANT Alter ON jh_store.* TO 'myself'@'localhost';
+GRANT Create ON jh_store.* TO 'myself'@'localhost';
+GRANT Create view ON jh_store.* TO 'myself'@'localhost';
+GRANT Delete ON jh_store.* TO 'myself'@'localhost';
+GRANT Delete history ON jh_store.* TO 'myself'@'localhost';
+GRANT Drop ON jh_store.* TO 'myself'@'localhost';
+GRANT Grant option ON jh_store.* TO 'myself'@'localhost';
+GRANT Index ON jh_store.* TO 'myself'@'localhost';
+GRANT Insert ON jh_store.* TO 'myself'@'localhost';
+GRANT References ON jh_store.* TO 'myself'@'localhost';
+GRANT Select ON jh_store.* TO 'myself'@'localhost';
+GRANT Show view ON jh_store.* TO 'myself'@'localhost';
+GRANT Trigger ON jh_store.* TO 'myself'@'localhost';
+GRANT Update ON jh_store.* TO 'myself'@'localhost';
+
+
 -- 테이블 생성
 -- jh_store.도로명주소 definition
 
