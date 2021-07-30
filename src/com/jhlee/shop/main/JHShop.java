@@ -5,11 +5,13 @@ import java.io.IOException;
 import java.nio.file.NoSuchFileException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+
 
 
 
@@ -31,7 +33,7 @@ public class JHShop {
 	
 	private static void SelectionSpace() {
 		Scanner sc = new Scanner(System.in);
-		
+		showSleepTime();
 		System.out.println("=".repeat(40));
 		System.out.println("JH스토어에 오신걸 환영합니다.");
 		System.out.println("=".repeat(40));
@@ -40,8 +42,11 @@ public class JHShop {
 		System.out.println("1.삼성전자|2.WesternDigital|3.씨게이트|4.샌디스크|5.종료");
         System.out.println("=".repeat(40));
         System.out.print("입력>");
-        int putt = sc.nextInt();
         while(true) {
+        	try {
+        		int putt = sc.nextInt();
+    
+
         if(putt==1) {
         	System.out.println("삼성전자 메뉴로 이동합니다.");
         	showSleepTime();
@@ -65,11 +70,17 @@ public class JHShop {
         if(putt==5) {
         	System.out.println("쇼핑을 종료합니다.");
         		break;
-        	}
-        }
+        		}
+        	}  catch (StoreInputException e) {
+    			String msg = "'는 잘못된 입력입니다. 다시 선택해 주세요.";
+    			System.out.println("'" + e.getMessage() + msg);
+    			continue;
+    		}
+       }
         sc.close();
+
 	}
-	
+
 	/**
 	 * 
 	 * @return 브랜드를 선택한 후 다음으로 넘어갈 때, 웨이팅 "."을 표시해준다.
@@ -141,15 +152,6 @@ public class JHShop {
 	 */
 	private static void daTaSelection() {
 		Scanner sc = new Scanner(System.in);
-		for(int i =0; i < 3; i++) {
-			try {
-				Thread.sleep(300);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			System.out.println(".");
-		}
 		System.out.println("용량을 선택해주세요.");
 		System.out.println("=".repeat(30));
 		System.out.println("1.250GB|2.500GB|3.1TB");
@@ -275,4 +277,17 @@ class JH_FileHandler extends FileHandler {
 		super.publish(record);
 		flush();
 	}
+}
+
+class StoreInputException extends IOException {
+
+	public StoreInputException(String selection) {
+		super(selection);
+	}
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5784146167775267154L;
+
 }
