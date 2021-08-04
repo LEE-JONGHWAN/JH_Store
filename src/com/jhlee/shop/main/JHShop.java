@@ -10,8 +10,27 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
+enum BrandType {
+	삼성전자(1),WesternDigital(2),씨게이트(3),샌디스크(4),종료(5);
+	
+	private int input;
+	
+	
+	private BrandType(int input) {
+		this.input = input;
+	}
+	
+	@Override
+	public String toString() {
+	return name() + "(" + getInput() + ")";
+	}
+	
+	public int getInput() {return input;}
+	public void setInput(int input) {this.input = input;}
 
+}
 
 
 public class JHShop {
@@ -21,8 +40,12 @@ public class JHShop {
 
 	static {
 		conn = DBLogin.getConnection();
-		if (conn != null)
+		if (conn != null) {
 			logger.info("Connection is successful");
+			System.out.println("Connection is successful");
+		} else {
+			logger.info("접속에 실패했습니다.");
+		}
 	};
 	
 	public static void main(String[] args) {
@@ -40,36 +63,44 @@ public class JHShop {
 		System.out.println("1.삼성전자|2.WesternDigital|3.씨게이트|4.샌디스크|5.종료");
         System.out.println("=".repeat(40));
         System.out.print("입력>");
-        int putt = sc.nextInt();
+        String putt = sc.nextLine();
+        putt.trim();
+ 		String answer = putt.toLowerCase();
+ 		if(Pattern.matches("(1|2|3|4|5)", answer)) {
+ 			int inn = Integer.parseInt(answer);
         while(true) {
-        if(putt==1) {
+        if(inn==1) {
         	System.out.println("삼성전자 메뉴로 이동합니다.");
         	showSleepTime();
         	samsungArea();
         }
-        if(putt==2) {
+        if(inn==2) {
         	System.out.println("Western Digital 메뉴로 이동합니다.");
         	showSleepTime();
         	westernDigitalArea();
         }
-        if(putt==3) {
+        if(inn==3) {
         	System.out.println("씨게이트 메뉴로 이동합니다.");
         	showSleepTime();
         	seaGateArea();
         }
-        if(putt==4) {
+        if(inn==4) {
         	System.out.println("샌디스크 메뉴로 이동합니다.");
         	showSleepTime();
         	sanDiskArea();
         }
-        if(putt==5) {
+        if(inn==5) {
         	System.out.println("쇼핑을 종료합니다.");
         		break;
-        	}
+        		}
         }
+ 		} else {
+ 			System.out.println(answer + "는 잘못된 입력입니다. 다시 선택해 주세요.");
+ 			SelectionSpace();
+ 		}
         sc.close();
-	}
-	
+	} 
+        
 	/**
 	 * 
 	 * @return 브랜드를 선택한 후 다음으로 넘어갈 때, 웨이팅 "."을 표시해준다.
@@ -276,3 +307,25 @@ class JH_FileHandler extends FileHandler {
 		flush();
 	}
 }
+
+
+
+class CreateUsers {
+	private String name;
+	private String password;
+	private String cellphone;
+	private String addr;
+	
+	// 대상 SQL의 데이터 가져오기 및 불러오기
+	public String getName() {return name;}
+	public void setName(String name) {this.name = name;}
+	public String getPassword() {return password;}
+	public void setPassword(String password) {this.password = password;}
+	public String getCellphone() {return cellphone;}
+	public void setCellphone(String cellphone) {this.cellphone = cellphone;}
+	public String getAddr() {return addr;}
+	public void setAddr(String addr) {this.addr = addr;}
+	
+}
+
+
