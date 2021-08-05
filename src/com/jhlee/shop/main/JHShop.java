@@ -5,15 +5,40 @@ import java.io.IOException;
 import java.nio.file.NoSuchFileException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
+
+
+import com.jbpark.dabang.module.StopSearchingException;
+import com.jhlee.shop.util.BrandName;
+import com.sun.jdi.ObjectCollectedException;
 
 
 
+//enum으로 지정된 브랜드 회사명을 일렬로 표시한다.
+enum BrandType {
+	삼성전자(1),WesternDigital(2),씨게이트(3),샌디스크(4),종료(5);
+	
+	private int input;
+	
+	BrandType(int i) {}
+	
+	public int getInput() {return input;}
+	public void setInput(int input) {this.input = input;}
+	
+	
+	@Override
+	public String toString() {
+	return name() + "(" + getInput() + ")";
+	}
+}
 
 
 public class JHShop {
@@ -27,11 +52,55 @@ public class JHShop {
 			logger.info("Connection is successful");
 	};
 	
-	public static void main(String[] args) {
-			SelectionSpace();
+	public static void main(String[] args){
+		selectUsers();
 	}	
 	
-	private static void SelectionSpace() {
+	private static void selectUsers() {
+		Scanner sc = new Scanner(System.in);
+		showSleepTime();
+		System.out.println("=".repeat(40));
+		System.out.println("JH스토어 유저 선택화면입니다.");
+		System.out.println("=".repeat(40));
+		System.out.println("1.관리자|2.등록매니저|3.일반유저|4.종료");
+		System.out.println("번호를 선택해주세요.");
+		System.out.println("=".repeat(40));
+		String sec = sc.nextLine();
+		sec.trim();
+		String answer = sec.toLowerCase();
+		if(Pattern.matches("(1|2|3|4)", answer)) {
+			int inn = Integer.parseInt(answer);
+        while(true) {
+        	//관리자 화면으로 이동.
+        	if(inn == 1) {
+        		System.out.println("관리자 화면으로 이동합니다.");
+        		break;
+        	}
+        	//등록 매니저 화면으로 이동.
+        	if(inn == 2) {
+        		System.out.println("등록 매니저 화면으로 이동합니다.");
+        		break;
+        	}
+        	//일반 유저 화면으로 이동.
+        	if(inn == 3) {
+        		System.out.println("일반 유저 화면으로 이동합니다.");
+        		break;
+        	}
+        	//프로그램을 종료.
+        	if(inn == 4) {
+        		System.out.println("화면을 종료합니다.");
+        		break;
+        	}
+        	
+        	}
+		}
+        else {
+			System.out.println(answer + "는 잘못된 입력입니다. 다시 선택해 주세요.");
+			selectUsers();
+		}
+	}
+
+	private static void selectionSpace(){
 		Scanner sc = new Scanner(System.in);
 		showSleepTime();
 		System.out.println("=".repeat(40));
@@ -42,44 +111,44 @@ public class JHShop {
 		System.out.println("1.삼성전자|2.WesternDigital|3.씨게이트|4.샌디스크|5.종료");
         System.out.println("=".repeat(40));
         System.out.print("입력>");
+        String putt = sc.nextLine();
+        putt.trim();
+		String answer = putt.toLowerCase();
+		if(Pattern.matches("(1|2|3|4|5)", answer)) {
+			int inn = Integer.parseInt(answer);
         while(true) {
-        	try {
-        		int putt = sc.nextInt();
-    
-
-        if(putt==1) {
+        if(inn==1) {
         	System.out.println("삼성전자 메뉴로 이동합니다.");
         	showSleepTime();
         	samsungArea();
         }
-        if(putt==2) {
+        if(inn==2) {
         	System.out.println("Western Digital 메뉴로 이동합니다.");
         	showSleepTime();
         	westernDigitalArea();
         }
-        if(putt==3) {
+        if(inn==3) {
         	System.out.println("씨게이트 메뉴로 이동합니다.");
         	showSleepTime();
         	seaGateArea();
         }
-        if(putt==4) {
+        if(inn==4) {
         	System.out.println("샌디스크 메뉴로 이동합니다.");
         	showSleepTime();
         	sanDiskArea();
         }
-        if(putt==5) {
+        if(inn==5) {
         	System.out.println("쇼핑을 종료합니다.");
         		break;
         		}
-        	}  catch (StoreInputException e) {
-    			String msg = "'는 잘못된 입력입니다. 다시 선택해 주세요.";
-    			System.out.println("'" + e.getMessage() + msg);
-    			continue;
-    		}
-       }
+        }
+		} else {
+			System.out.println(answer + "는 잘못된 입력입니다. 다시 선택해 주세요.");
+			selectionSpace();
+		}
         sc.close();
+      }
 
-	}
 
 	/**
 	 * 
@@ -159,6 +228,7 @@ public class JHShop {
 		switch(daTa) {
 		case 1 : 
 			System.out.println("250GB를 선택하셨습니다.");
+			showchecksum();
 			exitSelection();
 		case 2 :
 			System.out.println("500GB를 선택하셨습니다.");
@@ -171,6 +241,13 @@ public class JHShop {
 	}
 	
 	
+	private static void showchecksum() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("를 입력하시겠습니까?");
+		sc.nextLine();
+	}
+
+
 	/**
 	 * 종료하기 위해 오는 메소드 공간.
 	 * 여기서 종료를 시킬지 말지를 결정하게 만들어보자.
@@ -197,12 +274,28 @@ public class JHShop {
 			
 		case 2 :
 			System.out.println("처음으로 돌아갑니다.");
-			SelectionSpace();
+			selectionSpace();
 		}
 		sc.close();
 	}
-}
 
+
+private int get상품IDfromDB(String tea) {
+	String sql = "select 제품재고 from 제품재고 ";
+	try {
+		var ps = conn.prepareStatement(sql);
+		ps.setString(1, tea);
+		ResultSet rs = ps.executeQuery();
+		if (rs != null && rs.next()) {
+			return rs.getInt(1);
+		}
+	} catch (SQLException e) {
+		e.printStackTrace();
+		logger.severe(e.getMessage());
+	}
+	return 0;
+}
+}
 
 /**
  * J(Jonghwan Lee) Global Logger log file location
@@ -242,6 +335,13 @@ class JLogger {
 	}	
 }
 
+/**
+ * 
+ * @author jhLee
+ * @return 데이터베이스 로그인 하기 위한 정보
+ *
+ *
+ */
 class DBLogin {
 	
 	public static Connection getConnection() {
@@ -277,17 +377,4 @@ class JH_FileHandler extends FileHandler {
 		super.publish(record);
 		flush();
 	}
-}
-
-class StoreInputException extends IOException {
-
-	public StoreInputException(String selection) {
-		super(selection);
-	}
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5784146167775267154L;
-
 }
