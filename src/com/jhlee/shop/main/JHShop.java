@@ -15,28 +15,6 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
-enum BrandType {
-	삼성전자(1),WesternDigital(2),씨게이트(3),샌디스크(4),종료(5);
-	
-	private int input;
-	
-	
-	private BrandType(int input) {
-		this.input = input;
-	}
-	
-	@Override
-	public String toString() {
-	return name() + "(" + getInput() + ")";
-	}
-	
-	public int getInput() {return input;}
-	public void setInput(int input) {this.input = input;}
-
-<<<<<<< HEAD
-=======
-import com.jbpark.dabang.module.StopSearchingException;
-import com.jhlee.shop.util.BrandName;
 import com.sun.jdi.ObjectCollectedException;
 
 
@@ -57,7 +35,6 @@ enum BrandType {
 	public String toString() {
 	return name() + "(" + getInput() + ")";
 	}
->>>>>>> 279edcd7bf3d3266ff2fc9c380d0d3881f345351
 }
 
 
@@ -89,6 +66,7 @@ public class JHShop {
 		System.out.println("1.관리자|2.등록매니저|3.일반유저|4.종료");
 		System.out.println("번호를 선택해주세요.");
 		System.out.println("=".repeat(40));
+		System.out.print("입력>");
 		String sec = sc.nextLine();
 		sec.trim();
 		String answer = sec.toLowerCase();
@@ -108,7 +86,7 @@ public class JHShop {
         	//일반 유저 화면으로 이동.
         	if(inn == 3) {
         		System.out.println("일반 유저 화면으로 이동합니다.");
-        		break;
+        		selectionSpace();
         	}
         	//프로그램을 종료.
         	if(inn == 4) {
@@ -137,15 +115,9 @@ public class JHShop {
         System.out.print("입력>");
         String putt = sc.nextLine();
         putt.trim();
-<<<<<<< HEAD
  		String answer = putt.toLowerCase();
- 		if(Pattern.matches("(1|2|3|4|5)", answer)) {
- 			int inn = Integer.parseInt(answer);
-=======
-		String answer = putt.toLowerCase();
 		if(Pattern.matches("(1|2|3|4|5)", answer)) {
 			int inn = Integer.parseInt(answer);
->>>>>>> 279edcd7bf3d3266ff2fc9c380d0d3881f345351
         while(true) {
         if(inn==1) {
         	System.out.println("삼성전자 메뉴로 이동합니다.");
@@ -171,16 +143,7 @@ public class JHShop {
         	System.out.println("쇼핑을 종료합니다.");
         		break;
         		}
-        }
-<<<<<<< HEAD
- 		} else {
- 			System.out.println(answer + "는 잘못된 입력입니다. 다시 선택해 주세요.");
- 			SelectionSpace();
- 		}
-        sc.close();
-	} 
-        
-=======
+        	} 
 		} else {
 			System.out.println(answer + "는 잘못된 입력입니다. 다시 선택해 주세요.");
 			selectionSpace();
@@ -189,7 +152,6 @@ public class JHShop {
       }
 
 
->>>>>>> 279edcd7bf3d3266ff2fc9c380d0d3881f345351
 	/**
 	 * 
 	 * @return 브랜드를 선택한 후 다음으로 넘어갈 때, 웨이팅 "."을 표시해준다.
