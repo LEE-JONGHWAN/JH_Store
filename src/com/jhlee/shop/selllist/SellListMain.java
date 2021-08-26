@@ -1,24 +1,66 @@
 package com.jhlee.shop.selllist;
 
+import java.io.InputStream;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
+
 public class SellListMain {
+	
+	private static Date getDate(int year,int month,int date){
+	    Calendar cal = Calendar.getInstance();
+	    cal.set(Calendar.YEAR, year);
+	    cal.set(Calendar.MONTH, month-1);
+	    cal.set(Calendar.DAY_OF_MONTH, date);
+	    return cal.getTime();
+	}
+	
 	public static void main(String[] args) {
 		try {
 			ClassPathXmlApplicationContext appContext =
 				new ClassPathXmlApplicationContext(
 				  new String[]{"applicationContext-myBatis.xml"});
 			
-			SellDAO petDaoImpl =
-					(SellDAO)appContext.getBean("petDaoImpl");
-			
-			Scanner sc = new Scanner(System.in);
+			SellDAO sellDaoImpl =
+					(SellDAO)appContext.getBean("sellDaoImpl");
 			
 			
+			/**
+			 * 모든 상품 정보 출력
+			 */
+//			List <SellDVO> allDatas = sellDaoImpl.getAllData();
+//			allDatas.forEach(System.out::println);
+			
+			/**
+			 * 상품 정보를 입력한다.
+			 */
+			SellDVO newhd = new SellDVO();
+
+			newhd.setSellbrand("삼성전자");
+			newhd.setSellkinds("HDD");
+			newhd.setSelldata("500GB");
+			newhd.setSellcreate(LocalDate.now());
+			newhd.setSellprice(80_000);
+			
+			int petId = sellDaoImpl.insertHard(newhd);
+			System.out.println("ID: " + petId);
+	
+		}  catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+}
+
 //			/**
 //			 * 애완동물 목록 길이 출력
 //			 */
@@ -85,10 +127,3 @@ public class SellListMain {
 //			System.out.println("--- 애완동물 ---"); // 행2
 ////			System.out.println(changedPet); // 행3
 
-			
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
-}

@@ -15,8 +15,8 @@
 
 	<!-- Configure domain objects -->
 	<typeAliases>
-		<typeAlias alias="PetDVO"
-			type="com.ezen.mybatis.core.PetDVO" />
+		<typeAlias alias="SellDVO"
+			type="com.jhlee.shop.selllist.SellDVO" />
 	</typeAliases>
 
 	<!-- Configure the datasource -->
@@ -35,7 +35,7 @@
 
 	<!-- Configure mapper XML files -->
 	<mappers>
-		<mapper resource="petmapper.xml" />
+		<mapper resource="sellmapper.xml" />
 	</mappers>
 </configuration>
 

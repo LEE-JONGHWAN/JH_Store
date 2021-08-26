@@ -32,8 +32,8 @@
 	</bean>	
 	
 	<!-- Configure DAO classes --> 
-	<bean id="petDaoImpl" 
-		class="com.ezen.mybatis.core.PetDaoImpl">
+	<bean id="SellDaoImpl" 
+		class="com.jhlee.shop.selllist.SellDaoImpl">
 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
 	</bean>		
 </beans>

@@ -6,9 +6,36 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+
 public class sellDaoImpl implements SellDAO {
 
 	private SqlSessionTemplate sqlSessionTemplate;
+	
+	@Override
+	public  List<SellDVO> getAllData() {
+		List<SellDVO> put = sqlSessionTemplate.selectList("getAllDatas");
+		return put;
+	}
+	
+	@Override
+	public int insertHard(SellDVO sellDVO) {
+		Map<String, Object> petMap = new HashMap<String, Object>();
+		petMap.put("brand", sellDVO.getSellbrand());
+		petMap.put("kinds", sellDVO.getSellkinds());
+		petMap.put("data", sellDVO.getSelldata());
+		petMap.put("info", sellDVO.getSellinfo());
+		petMap.put("image", sellDVO.getSellimage());
+		petMap.put("create", sellDVO.getSellcreate());
+		sqlSessionTemplate.insert("insertHards", petMap);
+		Long longId = (Long)petMap.get("sellsr");
+
+		return longId.intValue();
+	}
+	
+	public void setSqlSessionTemplate(SqlSessionTemplate
+			sqlSessionTemplate) { 
+		this.sqlSessionTemplate = sqlSessionTemplate; 
+	}
 	
 //	@Override
 //	public List<PetDVO> getAllPetsData() {
@@ -16,10 +43,7 @@ public class sellDaoImpl implements SellDAO {
 //		return result;
 //	}
 //	
-//	public void setSqlSessionTemplate(SqlSessionTemplate
-//			sqlSessionTemplate) { 
-//		this.sqlSessionTemplate = sqlSessionTemplate; 
-//	}
+
 //	
 //	public PetDVO getPetObject(String petName) throws Exception {
 ////		HashMap<String, String> inputMap = new HashMap<String, String>();

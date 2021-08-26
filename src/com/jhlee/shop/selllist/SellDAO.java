@@ -2,7 +2,13 @@ package com.jhlee.shop.selllist;
 
 import java.util.List;
 
+
 public interface SellDAO {
+	
+	List<SellDVO> getAllData();
+	
+	
+	int insertHard(SellDVO sellDVO);
 	
 	
 //	List<PetDVO> getAllPetsData();

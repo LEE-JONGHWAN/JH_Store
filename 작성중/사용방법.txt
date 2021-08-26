@@ -1,0 +1,15 @@
+cmd나 bash 상에서 컴파일 할 때 한글이 깨지는 것을 막기 위해서
+사용 하는 것은 이하의 문장이다.
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+	PrintStream out;
+		out = new PrintStream(System.out, true, "UTF-8");
+			out.println( "[연결 요청]");
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\	
+
+
+github에서 전체 branch 받아오기
+
+git branch -r | grep -v '\->' | while read remote; do git branch --track "${remote#origin/}" "$remote"; done
+
+		
