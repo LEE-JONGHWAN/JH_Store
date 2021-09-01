@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sellmapper">
+	<!-- Add SQL statements -->
+
+	<select id="getAllData" resultType="SellDVO">
+		SELECT sellbrand as 브랜드, sellkinds as 종류, 
+		selldata as 용량, sellinven as 재고량 , sellprice as 가격,
+		sellinfo as 설명, sellimage as 상품이미지, sellcreate as 등록일자
+		FROM jh_store.selllist;
+	</select>
+	
+	<insert id="create" parameterType="java.util.Map"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into selllist(sellbrand, sellkinds, 
+			selldata, sellinven, sellprice, sellcreate)
+		values(#{sellbrand}, #{sellkinds}, 
+			#{selldata}, #{sellinven}, #{sellprice}, now());
+	</insert>
+
+	
+</mapper>

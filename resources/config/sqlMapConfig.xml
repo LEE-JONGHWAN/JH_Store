@@ -15,7 +15,7 @@
 	<!-- Configure domain objects -->
 	<typeAliases>
 		<typeAlias alias="SellDVO"
-			type="com.jhlee.shop.selllist.SellDVO"/>
+			type="model.SellDVO"/>
 	</typeAliases>
 
 	<!-- Configure mapper XML files -->

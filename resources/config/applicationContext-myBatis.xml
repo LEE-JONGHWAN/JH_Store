@@ -12,7 +12,7 @@
 			<value>jdbc:mariadb://localhost:3306/jh_store</value>
 		</property>
 		<property name="username">
-			<value>myself</value>
+			<value>test</value>
 		</property>
 		<property name="password">
 			<value>1234</value>
@@ -32,8 +32,8 @@
 	</bean>	
 	
 	<!-- Configure DAO classes --> 
-	<bean id="SellDaoImpl" 
-		class="com.jhlee.shop.selllist.SellDaoImpl">
+	<bean id="sellDaoImpl" 
+		class="mybatis.sellDaoImpl">
 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
 	</bean>		
 </beans>
